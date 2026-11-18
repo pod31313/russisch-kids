@@ -33,6 +33,7 @@ h1{font-size:22px;margin:0}
 .node .nm{font-weight:800;font-size:14px;text-align:center}
 .node .st{font-size:15px;min-height:20px;letter-spacing:2px}
 .p1{transform:translateX(-46px)}.p2{transform:translateX(0)}.p3{transform:translateX(46px)}.p4{transform:translateX(0)}
+.grp{align-self:stretch;text-align:center;font-weight:900;font-size:14px;color:var(--pri);letter-spacing:.5px;text-transform:uppercase;border-top:2px solid var(--line);border-bottom:2px solid var(--line);padding:8px 0;margin:12px 0 6px;background:var(--card);border-radius:12px}
 .foot{margin-top:auto;padding-top:18px;text-align:center;font-size:12px;color:var(--soft);line-height:1.5}
 .link{color:var(--soft);text-decoration:underline;font-size:12px;padding:6px}
 .btn{display:block;width:100%;padding:16px;border-radius:16px;background:var(--ok);color:#fff;font-weight:900;font-size:18px;letter-spacing:.5px;border-bottom:5px solid var(--ok-d);text-transform:uppercase}
@@ -111,7 +112,22 @@ const LET=[
  {c:'Д',s:'d',h:'wie in „Dach“'},
  {c:'Л',s:'l',h:'wie in „Lampe“'},
  {c:'П',s:'p',h:'wie in „Papa“'},
- {c:'И',s:'i',h:'wie in „Igel“'}
+ {c:'И',s:'i',h:'wie in „Igel“'},
+ {c:'Е',s:'je',h:'wie „je“ in „Jena“'},
+ {c:'Я',s:'ja',h:'wie in „ja“ – sieht aus wie ein gespiegeltes R!'},
+ {c:'Г',s:'g',h:'wie in „Garten“'},
+ {c:'Ф',s:'f',h:'wie in „Fisch“'},
+ {c:'Х',s:'ch',h:'wie in „Bach“ – sieht aus wie ein X!'},
+ {c:'Ш',s:'sch',h:'wie in „Schule“'},
+ {c:'Ч',s:'tsch',h:'wie in „Tschüss“'},
+ {c:'Ж',s:'zh',h:'weiches „sch“, wie das G in „Genie“'},
+ {c:'Ц',s:'ts',h:'wie das Z in „Zug“'},
+ {c:'Й',s:'j',h:'kurzes „j“, steht oft am Wortende (wie in „Mai“)'},
+ {c:'Ю',s:'ju',h:'wie „ju“ in „Jubel“'},
+ {c:'Ё',s:'jo',h:'wie „jo“ in „Joghurt“ (zwei Pünktchen!)'},
+ {c:'Ы',s:'y',h:'dumpfes „i“ – Zunge zurück, kein Lächeln!'},
+ {c:'Э',s:'e',h:'wie in „Bett“ – sieht aus wie ein gespiegeltes C!'},
+ {c:'З',s:'z',h:'weiches „s“ wie in „Sonne“ – sieht aus wie eine 3!'}
 ];
 const LM={};LET.forEach(l=>LM[l.c]=l);
 const WORDS=[
@@ -131,7 +147,33 @@ const WORDS=[
  {ru:'пока',de:'Tschüss',tr:'paka',em:'🙋'},
  {ru:'да',de:'Ja',tr:'da',em:'✅'},
  {ru:'нет',de:'Nein',tr:'njet',em:'❌'},
- {ru:'спасибо',de:'Danke',tr:'spassiba',em:'🙏'}
+ {ru:'спасибо',de:'Danke',tr:'spassiba',em:'🙏'},
+ {ru:'ягода',de:'Beere',tr:'jagada',em:'🍓'},
+ {ru:'рука',de:'Hand',tr:'ruka',em:'🖐️'},
+ {ru:'нога',de:'Bein',tr:'noga',em:'🦵'},
+ {ru:'хлеб',de:'Brot',tr:'chljep',em:'🍞'},
+ {ru:'тигр',de:'Tiger',tr:'tigr',em:'🐯'},
+ {ru:'футбол',de:'Fußball',tr:'futbol',em:'⚽'},
+ {ru:'школа',de:'Schule',tr:'schkola',em:'🏫'},
+ {ru:'чай',de:'Tee',tr:'tschai',em:'🍵'},
+ {ru:'цирк',de:'Zirkus',tr:'zirk',em:'🎪'},
+ {ru:'жук',de:'Käfer',tr:'zhuk',em:'🪲'},
+ {ru:'шар',de:'Ballon',tr:'schar',em:'🎈'},
+ {ru:'я',de:'ich',tr:'ja',em:'🙋'},
+ {ru:'ты',de:'du',tr:'ty',em:'👉'},
+ {ru:'он',de:'er',tr:'on',em:'👦'},
+ {ru:'она',de:'sie',tr:'ana',em:'👧'},
+ {ru:'мы',de:'wir',tr:'my',em:'👫'},
+ {ru:'один',de:'eins',tr:'adin',em:'1️⃣'},
+ {ru:'два',de:'zwei',tr:'dwa',em:'2️⃣'},
+ {ru:'три',de:'drei',tr:'tri',em:'3️⃣'},
+ {ru:'четыре',de:'vier',tr:'tschetyre',em:'4️⃣'},
+ {ru:'пять',de:'fünf',tr:'pjat',em:'5️⃣'},
+ {ru:'как дела',de:'Wie geht’s?',tr:'kak dela',em:'🤔'},
+ {ru:'хорошо',de:'gut',tr:'charascho',em:'👍'},
+ {ru:'меня зовут',de:'Ich heiße …',tr:'minja sawut',em:'📛'},
+ {ru:'пожалуйста',de:'Bitte',tr:'paschalusta',em:'🤲'},
+ {ru:'до свидания',de:'Auf Wiedersehen',tr:'da switanija',em:'👋'}
 ];
 const WM={};WORDS.forEach(w=>WM[w.ru]=w);
 const LESSONS=[
@@ -142,8 +184,18 @@ const LESSONS=[
  {t:'Buchstaben 3',ic:'🅱️',letters:'БДЛПИ',intro:'Fünf weitere Buchstaben für deinen Schatz.'},
  {t:'Wörter 3',ic:'🍌',words:['дом','папа','суп','лимон','банан'],intro:'Manche Wörter kennst du schon aus dem Deutschen – wie „Banane“!'},
  {t:'Erste Sätze',ic:'👋',words:['привет','пока','да','нет','спасибо'],intro:'Die wichtigsten Wörter zum Sprechen. Ein paar Buchstaben darin lernst du später noch.'},
- {t:'Mischka-Test',ic:'🏆',mix:true,intro:'Alles zusammen! Zeig, was du schon kannst.'}
+ {t:'Mischka-Test',ic:'🏆',mix:true,intro:'Alles zusammen! Zeig, was du schon kannst.'},
+ {grp:'Stufe 2 – Mehr Buchstaben',t:'Buchstaben 4',ic:'🔠',letters:'ЕЯГФХ',intro:'Fünf neue Buchstaben – manche sehen aus wie Zahlen oder gespiegelte Buchstaben!'},
+ {t:'Wörter 4',ic:'🍓',words:['ягода','рука','нога','хлеб','тигр','футбол'],intro:'Viele Wörter kennst du schon aus dem Deutschen: Tiger, Fußball …'},
+ {t:'Zischlaute',ic:'🐍',letters:'ШЧЖЦЙ',intro:'Jetzt die Zischlaute – wie eine Schlange! Ш, Ч, Ж und Ц, dazu das kurze Й.'},
+ {t:'Wörter 5',ic:'🏫',words:['школа','чай','цирк','жук','шар'],intro:'Mit den Zischlauten kannst du jetzt Schule, Tee und Zirkus lesen.'},
+ {t:'Die letzten Buchstaben',ic:'🎓',letters:'ЮЁЫЭЗ',intro:'Fast geschafft! Mit diesen fünf kennst du das ganze Alphabet (bis auf zwei Zeichen ohne Laut).'},
+ {t:'Ich, du, er …',ic:'🙋',words:['я','ты','он','она','мы'],intro:'Die wichtigsten kleinen Wörter: wer macht was?'},
+ {t:'Zahlen 1–5',ic:'🔢',words:['один','два','три','четыре','пять'],intro:'Zählen auf Russisch! „Пять“ hat ein Zeichen (ь), das wir noch nicht kennen – es macht den Laut weich.'},
+ {t:'Gespräch',ic:'💬',words:['как дела','хорошо','меня зовут','пожалуйста','до свидания'],intro:'Kleine Sätze fürs Gespräch. Probier sie laut mit Mischka!'},
+ {t:'Mischka-Test 2',ic:'🏅',mix:true,intro:'Das große Finale: alles, was du in Stufe 1 und 2 gelernt hast!'}
 ];
+LESSONS[0].grp='Stufe 1 – Los geht’s';
 const MSG=['Привет! 🐻 Ich bin Mischka. Komm, wir lernen Russisch!','Jeden Tag ein bisschen – dann klappt’s!','Du schaffst das! Давай! (Dawai = Los geht’s!)','Russisch sieht schwer aus – ist es aber nicht.','Ich bin stolz auf dich! 🐻'];
 
 /* ---------- Speicher ---------- */
@@ -231,7 +283,8 @@ function home(){
   const open=unlocked(i),done=!!P.done[i];
   const cls=done?'done':(open?'':'lock');
   const stars=done?'⭐'.repeat(P.done[i])+'☆'.repeat(3-P.done[i]):'';
-  return `<div class="node p${(i%4)+1} ${cls}"><button class="dot" data-a="${open?'intro':'noop'}" data-i="${i}" aria-label="${l.t}">${open?l.ic:'🔒'}</button><div class="nm">${l.t}</div><div class="st">${stars}</div></div>`;
+  const g=l.grp?`<div class="grp">${l.grp}</div>`:'';
+  return g+`<div class="node p${(i%4)+1} ${cls}"><button class="dot" data-a="${open?'intro':'noop'}" data-i="${i}" aria-label="${l.t}">${open?l.ic:'🔒'}</button><div class="nm">${l.t}</div><div class="st">${stars}</div></div>`;
  }).join('');
  const standalone=(window.navigator.standalone===true)||(window.matchMedia&&matchMedia('(display-mode: standalone)').matches);
  app.innerHTML=`
